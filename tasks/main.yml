@@ -1,0 +1,10 @@
+    - name: check if sumo collector service was installed
+      win_service:
+        name: sumo-collector
+      register: sumo_service_info
+
+    - include: uninstall.yml
+      when: sumo_reinstall and sumo_service_info.exists == true
+
+    - include: install.yml
+      when: sumo_service_info.exists == false or sumo_uninstall.changed ==true

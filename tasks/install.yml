@@ -1,0 +1,43 @@
+    - name: Create {{sumo_install_pkg}} directory
+      win_file:
+        path: "{{sumo_install_pkg}}"
+        state: directory
+
+    - name: Check for "{{sumo_install_pkg}}\SumoCollector.exe"
+      win_stat: path='{{sumo_install_pkg}}\SumoCollector.exe'
+      register: stat_sumo_collector
+     #- debug:
+     #    var: stat_sumo_collector
+    - name: Download sumo collector package
+      win_get_url:
+        url: "{{sumo_download_url}}"
+        dest: '{{sumo_install_pkg}}\SumoCollector.exe'
+        validate_certs: no
+      when: stat_sumo_collector.stat.exists == false or sumo_force_download == true
+
+    - name: Create Sumologic configuration files
+      win_template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - { src: "sumo_credentials.txt.j2", dest: '{{sumo_install_pkg}}\sumo_credentials.txt' }
+        - { src: "sumo_sources.json.j2", dest: '{{sumo_install_pkg}}\sumo_sources.json' }
+
+    - name: install Sumologic Collector
+      win_command: >
+        SumoCollector.exe -console -q
+        -Vcollector.name={{sumo_collector_name}}
+        -varfile {{sumo_install_pkg}}\sumo_credentials.txt
+        -Vsources="{{sumo_install_pkg}}\sumo_sources.json"
+      args:
+        chdir: "{{sumo_install_pkg}}"
+      register: sumo_install
+      failed_when: not (sumo_install.rc == 0 or sumo_install.rc == 3010)
+      
+    - name: Remove Sumo Installation files
+      win_file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{sumo_install_pkg}}\\sumo_credentials.txt"
+        - "{{sumo_install_pkg}}\\sumo_sources.json"

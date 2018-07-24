@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Victor Ma
+  description: To install SumoLogic Collector on to Windows
+  license: license (GPLv2, CC-BY, etc)
+
+  min_ansible_version: 2.0
+  platforms:
+  - name: Windows
+    versions:
+    - all
+
+  galaxy_tags:
+    - SumoLogic
+
+dependencies: []

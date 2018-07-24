@@ -1,0 +1,5 @@
+---
+# defaults file for decmaxn.sumo_collector_win
+sumo_install_pkg: 'C:\Agents'
+sumo_download_url: 'https://collectors.sumologic.com/rest/download/win64'
+sumo_force_download: false

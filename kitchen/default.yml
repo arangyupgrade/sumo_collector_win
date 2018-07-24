@@ -1,0 +1,18 @@
+---
+- name: kitchen_test_role
+  hosts: windows-servers
+  roles:
+    - name: Testing the following roles
+      role: kitchen_test_role
+      env: "dev"
+      sumo_install_pkg: 'C:\Agents'
+      sumo_download_url: 'https://collectors.sumologic.com/rest/download/win64'
+      sumo_reinstall: true
+      sumo_force_download: true
+      sumo_collector_name: "DBDX-DxNg-{{env}}"
+      sumo_collector_description: "DBDX Angular application Log files"
+      sumo_category_name: "dxng/{{env}}/log"
+      sumo_source_name: "DxNgLog"
+      sumo_source_folder: "C:\\Agents\\*.log"
+      sumo_accessid: 'xxxxxxxx'
+      sumo_accesskey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'

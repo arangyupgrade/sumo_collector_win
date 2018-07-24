@@ -1,0 +1,6 @@
+    - name: Uninstall Sumologic Collector
+      win_command: "uninstall.exe -console -q"
+      args:
+        chdir: C:\Program Files\Sumo Logic Collector
+      register: sumo_uninstall
+      failed_when: not (sumo_uninstall.rc == 0 or sumo_uninstall.rc == 3010)
