@@ -16,9 +16,9 @@ Role Variables
 Dependencies
 ------------
 
+The gather_facts must be set to true to get ansible_date_time. 
 
-
-Example Playbook
+Exampl_ Playbook
 ----------------
 
     - hosts: servers
@@ -28,6 +28,7 @@ Example Playbook
            sumo_download_url: 'https://collectors.sumologic.com/rest/download/win64'
            sumo_reinstall: true
            sumo_force_download: true
+           sumo_log_start: "{{ (ansible_date_time.epoch|int) * 1000 - 604800 }}"
            sumo_collector_name: "your collector name"
            sumo_collector_description: "your collector description"
            sumo_category_name: "xxxx/xxxx/xxxx"
