@@ -32,7 +32,7 @@ Example Playbook
            sumo_collector_description: "your collector description"
            sumo_category_name: "xxxx/xxxx/xxxx"
            sumo_source_name: "xxxxxx"
-           sumo_source_folder: "C:\\logs\\*.log"
+           sumo_source_folder: "C:\\\\logs\\\\*.log"
 
 Put the following variables in valut. 
 
